@@ -64,7 +64,16 @@ The UI uses the framework `locale` service (namespace `keep-awake`, zh/en dictio
 ## HTTP routes (loopback)
 
 - `GET /dsh-keep-awake/state` — current state (activity counts, helper process, config)
-- `PUT /dsh-keep-awake/config` — update config, body `{ "section": {...} }`
+- `PUT /dsh-keep-awake/config` — update config, body `{ "section": {...} }` (a partial patch; omitted fields keep their value)
+
+Writes are accepted from the two local front ends only — they look nothing alike on the wire (see `lib/request-source.js`):
+
+| Front end | Request shape | Decision |
+|---|---|---|
+| Web settings page (HTTP) | sends `Origin` equal to the request `Host` | same origin + loopback host (blocks cross-site and DNS rebinding) |
+| DSH Desktop (`dsh-app://`) | **no** `Origin`, **no** `Sec-Fetch-Site` | Electron's `forwardWebRequest()` strips them, so only a loopback peer + loopback `Host` remains |
+
+Everything else (cross-site, `Origin: null`, a `Sec-Fetch-Site` other than `same-origin`, a non-loopback peer) is answered 403.
 
 ## Install
 
@@ -79,4 +88,5 @@ pnpm install
 ## Development
 
 - For local development, mount the package into the profile via `link:` (see Install above) and use `node --check lib/*.js` for syntax checks
-- Layout: `lib/index.js` (Host), `lib/client.js` (web settings page), `cordis.patch.yml` (mount line)
+- Tests: `pnpm install && npm test` (`node --test`, no extra dependencies); the case that spawns a real OS helper is opt-in: `KEEP_AWAKE_SPAWN_TEST=1 npm test`
+- Layout: `lib/index.js` (Host), `lib/client.js` (web settings page), `lib/request-source.js` (write-source classification), `cordis.patch.yml` (mount line)

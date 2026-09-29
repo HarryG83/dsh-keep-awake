@@ -64,7 +64,16 @@
 ## HTTP 路由（loopback）
 
 - `GET /dsh-keep-awake/state` — 当前状态（活动计数、助手进程、配置）
-- `PUT /dsh-keep-awake/config` — 更新配置，body `{ "section": {...} }`
+- `PUT /dsh-keep-awake/config` — 更新配置，body `{ "section": {...} }`（局部补丁，未给出的字段保持不变）
+
+写操作只接受本机两类前端，二者在报头上完全不同（见 `lib/request-source.js`）：
+
+| 前端 | 请求特征 | 判定依据 |
+|---|---|---|
+| Web 设置页（HTTP） | 带 `Origin`（= 请求 `Host`） | 同源 + `Host` 为回环名（防跨站与 DNS rebinding） |
+| DSH 桌面端（`dsh-app://`） | **无** `Origin`、**无** `Sec-Fetch-Site` | Electron `forwardWebRequest()` 会剥掉这些头，只能凭回环对端 + 回环 `Host` 识别 |
+
+其余情况（跨站 / `Origin: null` / `Sec-Fetch-Site` 非 `same-origin` / 非回环对端）一律 403。
 
 ## 安装
 
@@ -79,4 +88,5 @@ pnpm install
 ## 开发
 
 - 本地开发建议以 `link:` 方式挂入 profile（见上方安装步骤），`node --check lib/*.js` 做语法校验
-- 包结构：`lib/index.js`（Host）、`lib/client.js`（Web 设置页）、`cordis.patch.yml`（挂载行）
+- 测试：`pnpm install && npm test`（`node --test`，零额外依赖）；真实拉起辅助进程的用例需显式开启：`KEEP_AWAKE_SPAWN_TEST=1 npm test`
+- 包结构：`lib/index.js`（Host）、`lib/client.js`（Web 设置页）、`lib/request-source.js`（写请求来源判定）、`cordis.patch.yml`（挂载行）
