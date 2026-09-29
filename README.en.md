@@ -6,7 +6,7 @@
 
 Blocks OS sleep while any agent / subagent / background job runs · auto-release after a configurable grace period once idle · manual hold · optional display-on · Windows / macOS / Linux · persisted settings · multilingual web settings page
 
-[![version](https://img.shields.io/badge/version-0.2.0-4176E6)](https://github.com/bearice/dsh-keep-awake)
+[![version](https://img.shields.io/badge/version-0.2.0-4176E6)](https://github.com/HarryG83/dsh-keep-awake)
 [![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![dsh](https://img.shields.io/badge/DeepSeek%20Harness-dsh--plugin-4176E6)](https://github.com/deepseek-ai/deepseek-harness)
 
@@ -79,7 +79,7 @@ Everything else (cross-site, `Origin: null`, a `Sec-Fetch-Site` other than `same
 
 ```sh
 # Inside the profile directory (e.g. ~/.dsh/profiles/web)
-pnpm add "dsh-keep-awake@<source>"   # npm / github:bearice/dsh-keep-awake / link:<local path>
+pnpm add "dsh-keep-awake@<source>"   # github:HarryG83/dsh-keep-awake / npm / link:<local path>
 # and add "dsh-keep-awake" to dsh.profile.bundles in package.json
 pnpm install
 # restart the profile

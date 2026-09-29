@@ -16,6 +16,11 @@
     "README.md",
     "README.en.md"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HarryG83/dsh-keep-awake.git"
+  },
+  "homepage": "https://github.com/HarryG83/dsh-keep-awake#readme",
   "license": "MIT",
   "scripts": {
     "test": "node --test"

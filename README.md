@@ -6,7 +6,7 @@
 
 任意 agent / subagent / 后台任务运行时阻止系统休眠 · 全部空闲后按宽限期自动释放 · 手动保持唤醒 · 可选阻止屏幕关闭 · Windows / macOS / Linux · 设置持久化 · 多语言 Web 设置页
 
-[![version](https://img.shields.io/badge/version-0.2.0-4176E6)](https://github.com/bearice/dsh-keep-awake)
+[![version](https://img.shields.io/badge/version-0.2.0-4176E6)](https://github.com/HarryG83/dsh-keep-awake)
 [![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![dsh](https://img.shields.io/badge/DeepSeek%20Harness-dsh--plugin-4176E6)](https://github.com/deepseek-ai/deepseek-harness)
 
@@ -79,7 +79,7 @@
 
 ```sh
 # 在 profile 目录内（如 ~/.dsh/profiles/web）
-pnpm add "dsh-keep-awake@<来源>"   # npm / github:bearice/dsh-keep-awake / link:<本地路径>
+pnpm add "dsh-keep-awake@<来源>"   # github:HarryG83/dsh-keep-awake / npm / link:<本地路径>
 # 并把 "dsh-keep-awake" 加入 package.json 的 dsh.profile.bundles
 pnpm install
 # 重启 profile
